@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wikidata completeness interface</title>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
+    <link rel="stylesheet" href="/css/styling.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    <script src="javascript/main.js"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+
+      <div id="pageTitle">
+        <h1>Wikidata faceted completeness tool</h1>
+        <p style="display: inline;">Database connection: </p><p id="dbConnectionStatus" style="display: inline; color: red;"></p>
+      </div>
+
+      <div id="facetPanel">
+        <h3>Class</h3>
+          <label>Select class to analyze: &nbsp;</label>
+          <select name="gender" class="ui dropdown" id="selectClass">
+            <option value=""> </option>
+            <option value="human">Human</option>
+            <option value="submarine">Submarine</option>
+            <option value="musicAlbum">Music Album</option>
+          </select>
+        <div class="ui divider"></div>
+
+        <h3>Facets</h3>
+        <!-- Occupation radio box -->
+        <div class="ui form">
+          <div class="grouped fields">
+            <label>Occupation</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="politician" checked="checked">
+                <label>Politician</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="soccerPlayer">
+                <label>Soccer player</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="lawyer">
+                <label>Lawyer</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="other">
+                <label>Other</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Occupation radio box -->
+          <br>
+          <!-- Nationality radio box -->
+
+          <div class="grouped fields">
+            <label>Nationality</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="nationality" checked="checked" value="usa">
+                <label>USA</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="nationality" value="germany">
+                <label>Germany</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="nationality" value="china">
+                <label>China</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="nationality" value="other">
+                <label>Other</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nationality radio box -->
+          <br>
+          <!-- Century of birth radio box -->
+
+          <div class="grouped fields">
+            <label>Century of birth</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryOfBirth" checked="checked" value="15">
+                <label> &lt; 15th Century </label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryOfBirth" value="16">
+                <label>16th century</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryOfBirth" value="17">
+                <label>17th century</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryOfBirth" value="18">
+                <label>18th+ century</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Century of birth radio box -->
+          <br>
+          <!-- Gender radio box -->
+
+          <div class="grouped fields">
+            <label>Gender</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="gender" checked="checked" value="male">
+                <label>Male</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="gender" value="female">
+                <label>Female</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="rightPanel">
+        <div id="attributePanel">
+          <h3>Attribute</h3>
+            <label>Select attribute to analyze: &nbsp;</label>
+            <select name="gender" class="ui dropdown" id="selectAttribute">
+              <option value=""> </option>
+              <option value="hasChild">hasChild</option>
+              <option value="dateOfBirth">dateOfBirth</option>
+              <option value="politicalParty">politicalParty</option>
+            </select>
+        </div>
+
+        <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Find out</button>
+        <div id="resultPanel">
+          <h2>Completeness: 6.3%</h2>
+          <p>Based on: </p>
+          <ul>
+            <li>There are x class instances</li>
+            <li>lorem ipsum </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
