@@ -14,7 +14,7 @@
 
       <div id="pageTitle">
         <h1>Wikidata faceted completeness tool</h1>
-        <p style="display: inline;">Database connection: </p><p id="dbConnectionStatus" style="display: inline; color: red;"></p>
+        <!-- <p style="display: inline;">Database connection: </p><p id="dbConnectionStatus" style="display: inline; color: red;"></p> -->
       </div>
 
       <div id="facetPanel">
@@ -35,19 +35,19 @@
             <label>Occupation</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="occupation" value="politician" checked="checked">
+                <input type="radio" name="occupation" value="Q82955" checked="checked">
                 <label>Politician</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="occupation" value="soccerPlayer">
+                <input type="radio" name="occupation" value="Q937857">
                 <label>Soccer player</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="occupation" value="lawyer">
+                <input type="radio" name="occupation" value="Q40348">
                 <label>Lawyer</label>
               </div>
             </div>
@@ -67,19 +67,19 @@
             <label>Nationality</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="nationality" checked="checked" value="usa">
+                <input type="radio" name="nationality" checked="checked" value="Q30">
                 <label>USA</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="nationality" value="germany">
+                <input type="radio" name="nationality" value="Q183">
                 <label>Germany</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="nationality" value="china">
+                <input type="radio" name="nationality" value="Q148">
                 <label>China</label>
               </div>
             </div>
@@ -131,13 +131,13 @@
             <label>Gender</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="gender" checked="checked" value="male">
+                <input type="radio" name="gender" checked="checked" value="Q6581097">
                 <label>Male</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="gender" value="female">
+                <input type="radio" name="gender" value="Q6581072">
                 <label>Female</label>
               </div>
             </div>
@@ -152,19 +152,15 @@
             <label>Select attribute to analyze: &nbsp;</label>
             <select name="gender" class="ui dropdown" id="selectAttribute">
               <option value=""> </option>
-              <option value="hasChild">hasChild</option>
-              <option value="dateOfBirth">dateOfBirth</option>
-              <option value="politicalParty">politicalParty</option>
+              <option value="P40">hasChild</option>
+              <option value="P569">dateOfBirth</option>
+              <option value="P102">politicalParty</option>
             </select>
         </div>
 
         <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Find out</button>
         <div id="resultPanel">
-          <h2>Completeness: 6.3%</h2>
-          <p>Based on: </p>
-          <ul>
-            <li>There are x class instances</li>
-            <li>lorem ipsum </li>
+          <h2>Completeness: <h1 id="result">6.3</h1>%</h2>
           </ul>
         </div>
       </div>

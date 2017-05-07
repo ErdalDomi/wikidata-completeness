@@ -42,4 +42,5 @@ $(function(){
  // Handle post response
  function onFormSubmitted(response) {
       console.log("the response on the client is: "+response);
+      $('#result').text(response);
  }
