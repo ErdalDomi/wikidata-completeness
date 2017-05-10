@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Wikidata completeness interface</title>
+    <title>BROWNIES</title>
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
     <link rel="stylesheet" href="/css/styling.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -13,7 +13,7 @@
     <div id="wrapper">
 
       <div id="pageTitle">
-        <h1>Wikidata faceted completeness tool</h1>
+        <h1>Browse and inspect completeness</h1>
         <!-- <p style="display: inline;">Database connection: </p><p id="dbConnectionStatus" style="display: inline; color: red;"></p> -->
       </div>
 
@@ -23,7 +23,7 @@
           <select name="gender" class="ui dropdown" id="selectClass">
             <option value=""> </option>
             <option value="human">Human</option>
-            <option value="submarine">Submarine</option>
+            <option value="submarine">Space mission</option>
             <option value="musicAlbum">Music Album</option>
           </select>
         <div class="ui divider"></div>
@@ -35,7 +35,13 @@
             <label>Occupation</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="occupation" value="Q82955" checked="checked">
+                <input type="radio" name="occupation" value="any">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="Q82955">
                 <label>Politician</label>
               </div>
             </div>
@@ -53,6 +59,12 @@
             </div>
             <div class="field">
               <div class="ui radio checkbox">
+                <input type="radio" name="occupation" value="Q10800557">
+                <label>Film actor</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
                 <input type="radio" name="occupation" value="other">
                 <label>Other</label>
               </div>
@@ -65,6 +77,12 @@
 
           <div class="grouped fields">
             <label>Nationality</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="nationality" value="any">
+                <label>Any</label>
+              </div>
+            </div>
             <div class="field">
               <div class="ui radio checkbox">
                 <input type="radio" name="nationality" checked="checked" value="Q30">
@@ -85,6 +103,12 @@
             </div>
             <div class="field">
               <div class="ui radio checkbox">
+                <input type="radio" name="nationality" value="Q38">
+                <label>Italy</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
                 <input type="radio" name="nationality" value="other">
                 <label>Other</label>
               </div>
@@ -93,37 +117,49 @@
 
           <!-- Nationality radio box -->
           <br>
-          <!-- Century of birth radio box -->
+          <!-- start Century of birth radio box -->
 
           <div class="grouped fields">
             <label>Century of birth</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="centuryOfBirth" checked="checked" value="15">
-                <label> &lt; 15th Century </label>
+                <input type="radio" name="centuryofbirth" value="0">
+                <label>Any</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="centuryOfBirth" value="16">
-                <label>16th century</label>
+                <input type="radio" name="centuryofbirth" checked="checked" value="1">
+                <label>&lt 17th Century </label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="centuryOfBirth" value="17">
-                <label>17th century</label>
+                <input type="radio" name="centuryofbirth" checked="checked" value="17">
+                <label>17th Century </label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="centuryOfBirth" value="18">
-                <label>18th+ century</label>
+                <input type="radio" name="centuryofbirth" value="18">
+                <label>18th century</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryofbirth" value="19">
+                <label>19th century</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="centuryofbirth" value="20">
+                <label>20th century</label>
               </div>
             </div>
           </div>
 
-          <!-- Century of birth radio box -->
+          <!-- end Century of birth radio box -->
           <br>
           <!-- Gender radio box -->
 
@@ -153,14 +189,15 @@
             <select name="gender" class="ui dropdown" id="selectAttribute">
               <option value=""> </option>
               <option value="P40">hasChild</option>
-              <option value="P569">dateOfBirth</option>
+              <option value="P13">placeOfBirth</option>
               <option value="P102">politicalParty</option>
+              <option value="P69">educatedAt</option>
             </select>
         </div>
 
-        <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Find out</button>
+        <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Inspect</button>
         <div id="resultPanel">
-          <h2>Completeness: <h1 id="result">6.3</h1>%</h2>
+          <h2>Completeness: <h1 id="result">6.3</h1></h2>
           </ul>
         </div>
       </div>

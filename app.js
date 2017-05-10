@@ -11,9 +11,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-var wdSparqlClient = new sparql.Client('http://wolfgang.inf.unibz.it:3030/WD');
-//not sure we need this anymore, since the script is done in App.java now
-
 app.use(express.static(path.join(__dirname, 'public')))
 
 var client; //we use this to query the database
@@ -32,30 +29,6 @@ client.on('error', function(error){
   dbStatus = "OFF"
 });
 
-/*
-example pg query :
-var query = client.query('select * from connection');
-var responseArray = [];
-query.on('row', function(row, result) {
-  curr = {id: row.id, label: row.name};
-  responseArray.push(curr);
-});
-example column name print
-var firstRow = result.rows[0];
-for(var columnName in firstRow){
-  console.log('%s | ', columnName);
-}
-
-get number of instances that dont have the attribute
-select (count(?item) as ?cnt)
-where {
-  ?item wdt:P31 wd:Q5.
-  ?item wdt:P21 wd:Q6581097.
-  ?item wdt:P27 wd:Q183.
-  ?item wdt:P106 wd:Q40348.
-  FILTER NOT EXISTS {?item wdt:P40 ?attribute . }
-  }
-*/
 console.log('Database connection established');
 
 app.get("/checkStatus", function(req, res){
@@ -63,10 +36,22 @@ app.get("/checkStatus", function(req, res){
 });
 
 app.post("/submitted", function(req, res){
+  if(req.body.occupation == 'any'){
+    console.log('if you seek any');
+  }
 
-  var query = client.query("select result from human where occupation = '" + req.body.occupation
-              + "' and nationality = '" + req.body.nationality + "' and gender = '" + req.body.gender
-              + "' and attribute = '" + req.body.attribute +"';");
+
+
+  var queryString = "select result from human where occupation = '" + req.body.occupation
+              + "' and nationality = '" + req.body.nationality
+              + "' and centuryofbirth = '" + req.body.centuryofbirth
+              + "' and gender = '" + req.body.gender
+              + "' and attribute = '" + req.body.attribute
+              +"';"
+  var query = client.query(queryString);
+  query.on('error', function(error) {
+      console.log("There was an error with the db query: " + error);
+    });
   var queryResult = [];
   query.on('row', function(row, result) {
     queryResult.push(row.result);

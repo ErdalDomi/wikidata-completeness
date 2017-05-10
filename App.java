@@ -53,10 +53,11 @@ public class App
 		}
 		
         String endpoint = "https://query.wikidata.org/sparql";
-        String[] occupation = {"Q82955", "Q40348", "Q937857"};
-        String[] nationality = {"Q30", "Q183", "Q148"};
-        String[] attribute = {"P40", "P569", "P102"};
+        String[] occupation = {"Q82955", "Q40348", "Q937857", "Q10800557", "other","any"};
+        String[] nationality = {"Q30", "Q183", "Q148", "Q38", "other","any"};
+        String[] attribute = {"P40", "P13", "P102", "P69"};
         String[] gender = {"Q6581097", "Q6581072"};
+        int[] centuryofbirth = {0,1,17,18,19,20};
         
         int i = 0;
         String query;
@@ -69,47 +70,82 @@ public class App
 			try {
 				stmt = connection.createStatement();				
 		        for(String occ : occupation){
+		        	String occupationString = "";
+		        	if(!occ.equals("any") && !occ.equals("other")){
+		        		occupationString = "?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/"+occ +"> .";
+		        	}else if(occ.equals("other")){
+		        		occupationString = "  FILTER EXISTS { ?item <http://www.wikidata.org/prop/direct/P106> ?occupation } " // with an occupation
+										  +"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/Q82955> } " // but that occupation is not politician
+										  +"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/Q40348> } " // nor lawyer
+										  +"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/Q937857> } "// nor footballer";
+										  +"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/Q10800557> }"; //nor film actor
+		        	}
 		        	for(String nat : nationality){
+		        		String nationalityString = "";
+		        		if(!nat.equals("any")&& !nat.equals("other")){
+		        			nationalityString = "?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/"+nat +"> . ";
+		        		}else if(nat.equals("other")){
+		        			nationalityString = "  FILTER EXISTS { ?item <http://www.wikidata.org/prop/direct/P27> ?nationality } " // with a nationality
+									  		+"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/Q30> } " // but that nationality is not usa
+									  		+"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/Q183> } " // nor germany
+									  		+"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/Q148> } " // nor china"
+									  		+"  FILTER NOT EXISTS { ?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/Q38> } "; //nor italy
+		        		}
 		        		for(String gen : gender){
 		        			for(String att: attribute){
-		        		    	query = "select (COUNT(?item) AS ?count) "
-				        		+ "where { "		        		
-				        		+ "?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/"+occ +"> ."
-				        		+ "?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/"+nat +"> . "
-				        		+ "?item <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/"+gen +"> . "
-				        		+ "?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5> . "
-				        		+ "}";
-		        				i++;
-		        		        qe = QueryExecutionFactory.sparqlService(endpoint, query);
-		        		        rs = qe.execSelect();
-		        		        qs = rs.next();
-		        		        node = qs.get("count");
-		        		        String totalnr = node.asLiteral().getValue().toString();	
-		        		        System.out.println("totalnr is: " + totalnr);		        		        		        				
-		        				System.out.println("ok totalnr " + i);
+		        				for(int cob: centuryofbirth){
+		        					String centuryofbirthString = "";
+		        					if(cob != 0 && cob != 1){
+		        						centuryofbirthString = "?item <http://www.wikidata.org/prop/direct/P569> ?dob ."
+		    					        		+ "FILTER(YEAR(?dob) >= " + ((cob-1)*100) + "&& YEAR(?dob) < " + (cob*100) + ")";
+		        					}else if(cob == 1){
+		        						centuryofbirthString = "?item <http://www.wikidata.org/prop/direct/P569> ?dob ."
+		        								+ "FILTER(YEAR(?dob) < 1700)";
+		        					}
+			        		    	query = "select (COUNT(?item) AS ?count) "
+					        		+ "where { "		        		
+					        		+ occupationString
+					        		+ nationalityString
+					        		+ "?item <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/"+gen +"> . "
+					        		+ "?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5> . "
+					        		+ centuryofbirthString
+					        		+ "}";
+			        				i++;
+			        		        qe = QueryExecutionFactory.sparqlService(endpoint, query);
+			        		        rs = qe.execSelect();
+			        		        qs = rs.next();
+			        		        node = qs.get("count");
+			        		        String totalnr = node.asLiteral().getValue().toString();	
+			        		        		        		        		        				
+			        				
+			        				
+			        				//maybe use the variable query instead of rewriting(pasting) this
+			        				query = "select (COUNT (distinct(?item)) AS ?count) "
+							        		+ "where { "		        		
+							        		+ occupationString
+							        		+ nationalityString
+							        		+ "?item <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/"+gen +"> . "
+							        		+ "?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5> . "
+							        		+ centuryofbirthString
+							        		+ " ?item <http://www.wikidata.org/prop/direct/"+att +"> ?attribute . "
+							        		+ "}";
+			        		        qe = QueryExecutionFactory.sparqlService(endpoint, query);
+			        		        rs = qe.execSelect();
+			        		        qs = rs.next();
+			        		        node = qs.get("count");
+			        		        
+			        		        String attnr = node.asLiteral().getValue().toString();	
+			        				int attnrint = Integer.parseInt(attnr);
+			        				int totalnrint = Integer.parseInt(totalnr);
+			        				float result = attnrint/(float)totalnrint;
+			        				String stringResult = Float.toString(result);
+			        				
+			        				String psqlQuery = "INSERT INTO human (occupation, nationality, centuryofbirth, gender, attribute, totalnr, attnr, result)"
+			        						+"VALUES('"+occ+"', '"+nat+"','"+cob+"', '"+gen+"','"+att+"','"+totalnr +"', '"+attnr +"', '"+ stringResult +"')";
+			        				stmt.executeUpdate(psqlQuery);
+			        				System.out.println("Row number " + i +" "+ occ + " " + nat + " " + cob + " " + gen + " " + att + " "+ totalnr+ " "+ attnr + " " + result);
 		        				
-		        				query = "select (COUNT (distinct(?item)) AS ?count) "
-						        		+ "where { "		        		
-						        		+ "?item <http://www.wikidata.org/prop/direct/P106> <http://www.wikidata.org/entity/"+occ +"> ."
-						        		+ "?item <http://www.wikidata.org/prop/direct/P27> <http://www.wikidata.org/entity/"+nat +"> . "
-						        		+ "?item <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/"+gen +"> . "
-						        		+ "?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5> . "
-						        		+ " ?item <http://www.wikidata.org/prop/direct/"+att +"> ?attribute . "
-						        		+ "}";
-		        		        qe = QueryExecutionFactory.sparqlService(endpoint, query);
-		        		        rs = qe.execSelect();
-		        		        qs = rs.next();
-		        		        node = qs.get("count");
-		        		        
-		        		        String attnr = node.asLiteral().getValue().toString();	
-		        				int attnrint = Integer.parseInt(attnr);
-		        				int totalnrint = Integer.parseInt(totalnr);
-		        				float result = attnrint/(float)totalnrint;
-		        				String stringResult = Float.toString(result);
-		        				
-		        				String psqlQuery = "INSERT INTO human (occupation, nationality, gender, attribute, totalnr, attnr, result)"
-		        						+"VALUES('"+occ+"', '"+nat+"', '"+gen+"','"+att+"','"+totalnr +"', '"+attnr +"', '"+ stringResult +"')";
-		        				stmt.executeUpdate(psqlQuery);
+		        				}
 		        			}
 		        		}
 		        	}
