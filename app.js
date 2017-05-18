@@ -36,18 +36,28 @@ app.get("/checkStatus", function(req, res){
 });
 
 app.post("/submitted", function(req, res){
-  if(req.body.occupation == 'any'){
-    console.log('if you seek any');
+
+  var queryString = "";
+  if(req.body.table == 'human'){
+
+    queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery, "
+                + "incompletequery, completelabel, incompletelabel from human where "
+                + "occupation = '" + req.body.occupation
+                + "' and nationality = '" + req.body.nationality
+                + "' and centuryofbirth = '" + req.body.centuryofbirth
+                + "' and gender = '" + req.body.gender
+                + "' and attribute = '" + req.body.attribute
+                +"';"
+  }else if(req.body.table == 'album'){
+    queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery,"
+    +" incompletequery, completelabel, incompletelabel from album where "
+    + "genre = '" + req.body.genre
+    + "' and language = '" + req.body.language
+    + "' and date = '" + req.body.date
+    + "' and attribute = '" + req.body.attribute
+    + "';"
   }
 
-
-
-  var queryString = "select result from human where occupation = '" + req.body.occupation
-              + "' and nationality = '" + req.body.nationality
-              + "' and centuryofbirth = '" + req.body.centuryofbirth
-              + "' and gender = '" + req.body.gender
-              + "' and attribute = '" + req.body.attribute
-              +"';"
   var query = client.query(queryString);
   query.on('error', function(error) {
       console.log("There was an error with the db query: " + error);
@@ -55,6 +65,18 @@ app.post("/submitted", function(req, res){
   var queryResult = [];
   query.on('row', function(row, result) {
     queryResult.push(row.result);
+    queryResult.push(row.totalnr);
+    queryResult.push(row.attnr);
+
+    queryResult.push(row.completeinstances);
+    console.log("pushed: " + row.completeinstances);
+    queryResult.push(row.incompleteinstances);
+
+    queryResult.push(row.completequery);
+    queryResult.push(row.incompletequery);
+
+    queryResult.push(row.completelabel);
+    queryResult.push(row.incompletelabel);
   });
   query.on('end', function(result){
     res.send(queryResult);

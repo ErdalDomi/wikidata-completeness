@@ -17,6 +17,10 @@
   padding-top: 10px;
 }
 
+.ui.form{
+  display: none;
+}
+
 #rightPanel{
   /*border: 1px solid black;*/
   float: right;

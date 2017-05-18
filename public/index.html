@@ -3,13 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>BROWNIES</title>
+
+    <!-- imports -->
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
     <link rel="stylesheet" href="/css/styling.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="javascript/main.js"></script>
+    <!-- || -->
+
   </head>
   <body>
+
     <div id="wrapper">
 
       <div id="pageTitle">
@@ -20,17 +25,185 @@
       <div id="facetPanel">
         <h3>Class</h3>
           <label>Select class to analyze: &nbsp;</label>
-          <select name="gender" class="ui dropdown" id="selectClass">
+          <select name="gender" class="ui dropdown" id="selectClass" onchange="showForm();">
             <option value=""> </option>
-            <option value="human">Human</option>
-            <option value="submarine">Space mission</option>
-            <option value="musicAlbum">Music Album</option>
+            <option value="humanForm">Human</option>
+            <option value="spaceForm">Space mission</option>
+            <option value="musicForm">Music Album</option>
           </select>
         <div class="ui divider"></div>
 
         <h3>Facets</h3>
-        <!-- Occupation radio box -->
-        <div class="ui form">
+
+        <div class="ui form" id="spaceForm">
+          <div class="grouped fields">
+            <label>Country</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="country" value="any">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="country" value="any">
+                <label>USA</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="country" value="any">
+                <label>Russia</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="country" value="any">
+                <label>China</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="country" value="any">
+                <label>India</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui form" id="musicForm">
+          <div class="grouped fields">
+
+            <label>Genre</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="any">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="Q8341">
+                <label>Jazz</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="Q11399">
+                <label>Rock</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="Q11401">
+                <label>Hip-Hop</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="Q235858">
+                <label>Folk</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="Q9759">
+                <label>Blues</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="genre" value="other">
+                <label>Other</label>
+              </div>
+            </div>
+
+            <label>Language</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="any">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="Q1860">
+                <label>English</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="Q7737">
+                <label>Russian</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="Q1321">
+                <label>Spanish</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="Q652">
+                <label>Italian</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="language" value="other">
+                <label>Other</label>
+              </div>
+            </div>
+
+            <label>Date</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="0">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="1">
+                <label>&lt 1960</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="1960">
+                <label>1960-1970</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="1970">
+                <label>1970-1980</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="1980">
+                <label>1980-1990</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="1990">
+                <label>1990-2000</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="date" value="2000">
+                <label>2000-2010</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui form" id="humanForm">
+          <!-- Occupation radio box -->
           <div class="grouped fields">
             <label>Occupation</label>
             <div class="field">
@@ -197,8 +370,35 @@
 
         <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Inspect</button>
         <div id="resultPanel">
-          <h2>Completeness: <h1 id="result">6.3</h1></h2>
-          </ul>
+
+          <h2 style="display: inline;">Completeness: <h1 id="result"></h1></h2>
+
+          <div id="instances" class="ui grid">
+            <div id="" class="eight wide column">
+              Complete samples
+              <ul id="completeinstances">
+
+              </ul>
+            </div>
+
+            <div  class="eight wide column">
+              Incomplete samples
+              <ul id="incompleteinstances">
+
+              </ul>
+            </div>
+          </div>
+
+          <div >
+            <button class="ui orange button" id="completeQueryLink" style="margin-left: 20px; float: left;">See on wikidata</button>
+
+            <button class="ui brown button" id="incompleteQueryLink" style="float: right; margin-right: 180px;">See on wikidata</button>
+          </div>
+
+          <div id="incompleteQuery">
+
+          </div>
+
         </div>
       </div>
     </div>
