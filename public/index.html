@@ -10,6 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="javascript/main.js"></script>
+    <script src="javascript/jquery.jqplot.js"></script>
+    <script src="javascript/graphPlugins/jqplot.barRenderer.js"></script>
+    <script src="javascript/graphPlugins/jqplot.pierenderer.js"></script>
+    <script src="javascript/graphPlugins/jqplot.categoryAxisRenderer.js"></script>
+    <script src="javascript/graphPlugins/jqplot.pointLabels.js"></script>
+    <script src="css/jquery.jqplot.css"></script>
     <!-- || -->
 
   </head>
@@ -340,7 +346,13 @@
             <label>Gender</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="gender" checked="checked" value="Q6581097">
+                <input type="radio" name="gender" checked="checked" value="any">
+                <label>Any</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="gender" value="Q6581097">
                 <label>Male</label>
               </div>
             </div>
@@ -356,13 +368,61 @@
       </div>
 
       <div id="rightPanel">
+
+        <div id="chart" style="height:300px; width:500px;"></div>
+
+        <table>
+          <tr>
+            <th>Label</th>
+            <th>Has child</th>
+            <th>Place of birth</th>
+            <th>Political party</th>
+            <th>Educated at</th>
+            <th>Complete</th>
+          </tr>
+          <tr>
+            <td>Louisa Adams</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>68%</td>
+          </tr>
+          <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+          </tr>
+          <tr>
+            <td>Ernst Handel</td>
+            <td>Roland Mendel</td>
+            <td>Austria</td>
+          </tr>
+          <tr>
+            <td>Island Trading</td>
+            <td>Helen Bennett</td>
+            <td>UK</td>
+          </tr>
+          <tr>
+            <td>Laughing Bacchus Winecellars</td>
+            <td>Yoshi Tannamuri</td>
+            <td>Canada</td>
+          </tr>
+          <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Giovanni Rovelli</td>
+            <td>Italy</td>
+          </tr>
+        </table>
+
+
         <div id="attributePanel">
           <h3>Attribute</h3>
             <label>Select attribute to analyze: &nbsp;</label>
             <select name="gender" class="ui dropdown" id="selectAttribute">
               <option value=""> </option>
               <option value="P40">hasChild</option>
-              <option value="P13">placeOfBirth</option>
+              <option value="P19">placeOfBirth</option>
               <option value="P102">politicalParty</option>
               <option value="P69">educatedAt</option>
             </select>

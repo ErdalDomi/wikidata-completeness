@@ -40,14 +40,22 @@ app.post("/submitted", function(req, res){
   var queryString = "";
   if(req.body.table == 'human'){
 
-    queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery, "
-                + "incompletequery, completelabel, incompletelabel from human where "
+    // this string is needed to populate human table
+    // queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery, "
+    //             + "incompletequery, completelabel, incompletelabel from human where "
+    //             + "occupation = '" + req.body.occupation
+    //             + "' and nationality = '" + req.body.nationality
+    //             + "' and centuryofbirth = '" + req.body.centuryofbirth
+    //             + "' and gender = '" + req.body.gender
+    //             + "' and attribute = '" + req.body.attribute
+    //             +"';"
+
+    //this string will populate humangraph
+    queryString = "select graphdata from humangraph where "
                 + "occupation = '" + req.body.occupation
                 + "' and nationality = '" + req.body.nationality
                 + "' and centuryofbirth = '" + req.body.centuryofbirth
-                + "' and gender = '" + req.body.gender
-                + "' and attribute = '" + req.body.attribute
-                +"';"
+                + "' and gender = '" + req.body.gender + "';";
   }else if(req.body.table == 'album'){
     queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery,"
     +" incompletequery, completelabel, incompletelabel from album where "
@@ -64,19 +72,23 @@ app.post("/submitted", function(req, res){
     });
   var queryResult = [];
   query.on('row', function(row, result) {
-    queryResult.push(row.result);
-    queryResult.push(row.totalnr);
-    queryResult.push(row.attnr);
 
-    queryResult.push(row.completeinstances);
-    console.log("pushed: " + row.completeinstances);
-    queryResult.push(row.incompleteinstances);
+    //this is the mapping for human table
+    // queryResult.push(row.result);
+    // queryResult.push(row.totalnr);
+    // queryResult.push(row.attnr);
+    //
+    // queryResult.push(row.completeinstances);
+    // queryResult.push(row.incompleteinstances);
+    //
+    // queryResult.push(row.completequery);
+    // queryResult.push(row.incompletequery);
+    //
+    // queryResult.push(row.completelabel);
+    // queryResult.push(row.incompletelabel);
 
-    queryResult.push(row.completequery);
-    queryResult.push(row.incompletequery);
-
-    queryResult.push(row.completelabel);
-    queryResult.push(row.incompletelabel);
+    //this is the mapping for humangraph 
+    queryResult.push(row.graphdata);
   });
   query.on('end', function(result){
     res.send(queryResult);

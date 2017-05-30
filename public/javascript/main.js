@@ -5,13 +5,54 @@ $(function(){
   $('.ui.checkbox').checkbox("uncheck");
 });
 
-//These are the values that will populate the radio facets
+function showChart(data){
+  $("#chart").empty(); //reset the graph
+
+  $.jqplot.config.enablePlugins = true;
+
+  var s1 = [500, 600, 7000, 1000, 200, 3000]; //stock data
+  var i=0; //iterator
+  var parsed = JSON.parse(data);
+
+  for(var slot in parsed){
+    s1[i] = parsed[slot]; //fill in the data
+    i++;
+  }
+  var ticks = ['0', '20', '40', '60', '80', '100']; //x axis labels
+
+  plot1 = $.jqplot('chart', [s1], {
+      // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+      animate: !$.jqplot.use_excanvas,
+      seriesDefaults:{
+          renderer:$.jqplot.BarRenderer,
+          pointLabels: { show: true }
+      },
+      axes: {
+          xaxis: {
+              renderer: $.jqplot.CategoryAxisRenderer,
+              ticks: ticks
+          }
+      },
+      highlighter: { show: false }
+  });
+
+  //this is where onClick magic happens
+  $('#chart1').bind('jqplotDataClick',
+      function (ev, seriesIndex, pointIndex, data) {
+          $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+      }
+  );
+}
+
+
+//These are the values that will populate the attribute dropdown
 //They are plugged in on the showForm function
 var humanOptions = {
-  "Has child": "P40",
-  "Place of birth": "P13",
-  "Political party": "P102",
-  "Educated at": "P69"
+  "Given name": "P735",
+  "Place of birth": "P19",
+  "Father" : "P22",
+  "Mother" : "P24",
+  "Native language" : "P103"
 };
 
 var musicOptions = {
@@ -61,12 +102,14 @@ var showForm = function() {
   }
   switchAtts("#selectAttribute", dpOptions);
   $("#selectAttribute").dropdown('clear');//clear selected attribute so it doesnt look out of place when changing classes
+  //$('#resultPanel').hide();
 }
 
 
 
 function submitForm() {
   var formData = {};
+  //$('#resultPanel').show();
   if($('#selectClass').find(':selected').val() == 'humanForm'){
     console.log("we're getting the form data for the humanForm");
     formData = {
@@ -104,9 +147,10 @@ function submitForm() {
 // Handle post response
 //to-do specify what is reponse[0],[1] and [2]
 function onFormSubmitted(response) {
-  console.log("the response on the client is: "+response);
-  $('#result').text((response[0] * 100).toFixed(4)+ "% " + " (" + response[2]+" complete out of "+response[1]+")");
 
+  console.log("the response on the client is: "+response);
+  showChart(response);
+  $('#result').text((response[0] * 100).toFixed(4)+ "% " + " (" + response[2]+" complete out of "+response[1]+")");
 
 //.replace(/,/g, '')
   if(response[3]){
@@ -121,6 +165,7 @@ function onFormSubmitted(response) {
   if(response[8]){ //incompleteLabel
     var incompleteLabelArray = response[8].split(',');
   }
+
   var completeInstancesList = $.map(completeInstanceArray, function (value, i) {
     if(i == 10){
 
@@ -130,6 +175,7 @@ function onFormSubmitted(response) {
       return '<li><a href="#" > -- </a></li>'
     }
   }).join('');
+
   $('#completeinstances').html(completeInstancesList);
 
   var incompleteInstancesList = $.map(incompleteInstanceArray, function(value, i){
