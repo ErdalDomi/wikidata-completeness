@@ -21,12 +21,14 @@ tr:nth-child(even) {
 #pageTitle{
   text-align: center;
   margin-bottom: 2%;
+	margin-top: 1%;
 }
 
 #facetPanel{
   float: left;
-  width: 35%;
-  border: 1px solid black;
+  width: 25%;
+/*  border: 1px solid black;*/
+	border-right: 1px solid black;
   margin-left: 10px;
   margin-bottom: 10px;
   padding-left: 15px;
@@ -40,7 +42,7 @@ tr:nth-child(even) {
 #rightPanel{
   /*border: 1px solid black;*/
   float: right;
-  width: 60%;
+  width: 70%;
   margin-right: 15px;
 }
 
@@ -63,4 +65,8 @@ tr:nth-child(even) {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10%;
+}
+
+#chart{
+		margin: 0 auto;
 }

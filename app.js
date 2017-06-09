@@ -51,11 +51,13 @@ app.post("/submitted", function(req, res){
     //             +"';"
 
     //this string will populate humangraph
-    queryString = "select graphdata from humangraph where "
+    queryString = "select graphdata, tabledata, labels, items from humangraph where "
                 + "occupation = '" + req.body.occupation
                 + "' and nationality = '" + req.body.nationality
                 + "' and centuryofbirth = '" + req.body.centuryofbirth
-                + "' and gender = '" + req.body.gender + "';";
+                + "' and gender = '" + req.body.gender
+                + "' and slot   = '" + req.body.slot
+                + "';";
   }else if(req.body.table == 'album'){
     queryString = "select result, totalnr, attnr, completeinstances, incompleteinstances, completequery,"
     +" incompletequery, completelabel, incompletelabel from album where "
@@ -87,8 +89,11 @@ app.post("/submitted", function(req, res){
     // queryResult.push(row.completelabel);
     // queryResult.push(row.incompletelabel);
 
-    //this is the mapping for humangraph 
+    //this is the mapping for humangraph
     queryResult.push(row.graphdata);
+    queryResult.push(row.tabledata);
+    queryResult.push(row.labels);
+    queryResult.push(row.items);
   });
   query.on('end', function(result){
     res.send(queryResult);

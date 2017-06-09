@@ -371,50 +371,30 @@
 
         <div id="chart" style="height:300px; width:500px;"></div>
 
-        <table>
-          <tr>
-            <th>Label</th>
-            <th>Has child</th>
-            <th>Place of birth</th>
-            <th>Political party</th>
-            <th>Educated at</th>
-            <th>Complete</th>
-          </tr>
-          <tr>
-            <td>Louisa Adams</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-            <td>68%</td>
-          </tr>
-          <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-          </tr>
-          <tr>
-            <td>Ernst Handel</td>
-            <td>Roland Mendel</td>
-            <td>Austria</td>
-          </tr>
-          <tr>
-            <td>Island Trading</td>
-            <td>Helen Bennett</td>
-            <td>UK</td>
-          </tr>
-          <tr>
-            <td>Laughing Bacchus Winecellars</td>
-            <td>Yoshi Tannamuri</td>
-            <td>Canada</td>
-          </tr>
-          <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
-          </tr>
+        <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Inspect</button>
+        <table id="responseTable">
+
+            <thead>
+              <tr>
+              <th>Link</th>
+              <th>Given name</th>
+              <th>Place of birth</th>
+              <th>Father</th>
+              <th>Mother</th>
+              <th>Native Language</th>
+              <th>Completeness</th>
+              </tr>
+            </thead>
+
+
+          <tbody>
+
+          </tbody>
         </table>
 
+
+
+<!-- selecting attributes
 
         <div id="attributePanel">
           <h3>Attribute</h3>
@@ -427,8 +407,11 @@
               <option value="P69">educatedAt</option>
             </select>
         </div>
+-->
 
-        <button class="huge primary ui button" id="bigButton" onclick="submitForm()">Inspect</button>
+
+
+<!--
         <div id="resultPanel">
 
           <h2 style="display: inline;">Completeness: <h1 id="result"></h1></h2>
@@ -460,6 +443,8 @@
           </div>
 
         </div>
+
+-->
       </div>
     </div>
   </body>
